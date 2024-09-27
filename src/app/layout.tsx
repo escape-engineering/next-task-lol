@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Link from "next/link";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Providers from "@/store/queryProvider";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -15,7 +17,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-    title: "league of legends",
+    title: "Riot Likes",
     description: "Riot Gamse API를 사용하여 리그오브레전드 정보를 제공해주는 페이지입니다.",
 };
 
@@ -55,7 +57,10 @@ export default function RootLayout({
                         </Link>
                     </nav>
                 </header>
-                {children}
+                <Providers>
+                    {children}
+                    <ReactQueryDevtools />
+                </Providers>
             </body>
         </html>
     );
