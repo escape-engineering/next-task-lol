@@ -1,3 +1,5 @@
+"use server";
+
 import { ChampionDetail, ChampionList } from "@/types/Champion";
 import { ItemDetail } from "@/types/Item";
 
@@ -11,7 +13,12 @@ const getCurrentVersion = async () => {
 const getChampionList = async () => {
     const currentVersion = await getCurrentVersion();
     const championsRes = await fetch(
-        `${process.env.NEXT_PUBLIC_DDRAGON_URL}/cdn/${currentVersion}/data/ko_KR/champion.json`
+        `${process.env.NEXT_PUBLIC_DDRAGON_URL}/cdn/${currentVersion}/data/ko_KR/champion.json`,
+        {
+            next: {
+                revalidate: 86400,
+            },
+        }
     );
     const championsData: ChampionList = await championsRes.json();
     const championsList = Object.values(championsData.data);
