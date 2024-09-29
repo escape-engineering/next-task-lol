@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { ChampionDetail, ChampionList } from "@/types/Champion";
@@ -39,18 +40,15 @@ const getItemsList = async () => {
     const currentVersion = await getCurrentVersion();
     const itemRes = await fetch(`${process.env.NEXT_PUBLIC_DDRAGON_URL}/cdn/${currentVersion}/data/ko_KR/item.json`);
     const itemData: ItemDetail = await itemRes.json();
-    const itemList = Object.values(itemData.data).map((item) => {
-        return {
-            name: item.name,
-            description: item.description,
-            plaintext: item.plaintext,
-            into: item.into,
-            image: item.image,
-            gold: item.gold,
-            tags: item.tags,
-        };
-    });
-    return itemList;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const newItemsData = Object.entries(itemData.data)
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        .filter(([_, value]) => value.maps["11"] && value.gold.purchasable)
+        .reduce((acc: Record<string, ItemDetail["data"][string]>, [key, value]) => {
+            acc[key] = value;
+            return acc;
+        }, {} as Record<string, ItemDetail["data"][string]>);
+    return newItemsData;
 };
 
 export { getChampionList, getCurrentVersion, getChampionDetail, getItemsList };

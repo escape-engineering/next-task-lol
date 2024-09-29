@@ -8,7 +8,8 @@ export type ItemDetail = {
             description: string;
             colloq: string;
             plaintext: string;
-            into: string[];
+            from?: string[];
+            into?: string[];
             image: {
                 full?: string;
                 sprite?: string;
@@ -22,7 +23,7 @@ export type ItemDetail = {
                 base?: number;
                 total?: number;
                 sell?: number;
-                purchase?: number;
+                purchasable?: number;
             };
             tags: string[];
             maps: Record<string, boolean>;
