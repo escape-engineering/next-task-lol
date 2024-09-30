@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+            <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}>
                 <header>
                     <nav className="bg-[#2c2c2c] text-white font-bold flex flex-row justify-between py-[10px] px-[100px]">
                         <Link
@@ -54,6 +54,12 @@ export default function RootLayout({
                             className="hover:bg-slate-500 w-[200px] px-[20px] py-[10px] items-center text-center rounded-[14px]"
                         >
                             로테이션 확인하기
+                        </Link>
+                        <Link
+                            href={"/ideal"}
+                            className="hover:bg-slate-500 w-[230px] px-[20px] py-[10px] items-center text-center rounded-[14px]"
+                        >
+                            챔피언 이상형 월드컵
                         </Link>
                     </nav>
                 </header>

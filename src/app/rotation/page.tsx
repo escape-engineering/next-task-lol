@@ -2,6 +2,8 @@
 
 import { Champion } from "@/types/Champion";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import Image from "next/image";
+import Link from "next/link";
 import { Suspense } from "react";
 
 const RotationPage = () => {
@@ -10,6 +12,7 @@ const RotationPage = () => {
         queryFn: async () => {
             const rotationRes = await fetch(`${process.env.NEXT_PUBLIC_ROUTE_API_URL}/api/rotation`);
             const { data: rotationData } = await rotationRes.json();
+            console.log("rotationData :>> ", rotationData);
             const championsRes = await fetch(
                 `${process.env.NEXT_PUBLIC_DDRAGON_URL}/cdn/14.19.1/data/ko_KR/champion.json`
             );
@@ -36,7 +39,17 @@ const RotationPage = () => {
                     <h1>챔피언 로테이션</h1>
                     <div className="flex flex-row gap-[10px]">
                         {rotationObj?.freeChamps.map((champ) => {
-                            return <div key={champ.key}>{champ.name}</div>;
+                            return (
+                                <Link href={`/champions/${champ.id}`} key={champ.key}>
+                                    <Image
+                                        src={`https://ddragon.leagueoflegends.com/cdn/14.19.1/img/champion/${champ.id}.png`}
+                                        alt={`${champ.name}이미지`}
+                                        width={300}
+                                        height={300}
+                                    />
+                                    <p>{champ.name}</p>
+                                </Link>
+                            );
                         })}
                     </div>
                 </section>
@@ -44,7 +57,17 @@ const RotationPage = () => {
                     <h1>신규유저를 위한 로테이션</h1>
                     <div className="flex flex-row gap-[10px]">
                         {rotationObj?.freeChampsForNewbs.map((champ) => {
-                            return <div key={champ.key}>{champ.name}</div>;
+                            return (
+                                <Link href={`/champions/${champ.id}`} key={champ.key}>
+                                    <Image
+                                        src={`https://ddragon.leagueoflegends.com/cdn/14.19.1/img/champion/${champ.id}.png`}
+                                        alt={`${champ.name}이미지`}
+                                        width={300}
+                                        height={300}
+                                    />
+                                    <p>{champ.name}</p>
+                                </Link>
+                            );
                         })}
                     </div>
                 </section>
