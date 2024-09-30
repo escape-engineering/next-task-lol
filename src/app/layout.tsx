@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Link from "next/link";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Providers from "@/store/queryProvider";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -15,7 +17,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-    title: "league of legends",
+    title: "Riot Likes",
     description: "Riot Gamse API를 사용하여 리그오브레전드 정보를 제공해주는 페이지입니다.",
 };
 
@@ -26,7 +28,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+            <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}>
                 <header>
                     <nav className="bg-[#2c2c2c] text-white font-bold flex flex-row justify-between py-[10px] px-[100px]">
                         <Link
@@ -53,9 +55,18 @@ export default function RootLayout({
                         >
                             로테이션 확인하기
                         </Link>
+                        <Link
+                            href={"/ideal"}
+                            className="hover:bg-slate-500 w-[230px] px-[20px] py-[10px] items-center text-center rounded-[14px]"
+                        >
+                            챔피언 이상형 월드컵
+                        </Link>
                     </nav>
                 </header>
-                {children}
+                <Providers>
+                    {children}
+                    <ReactQueryDevtools />
+                </Providers>
             </body>
         </html>
     );
