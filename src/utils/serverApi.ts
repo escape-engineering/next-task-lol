@@ -6,7 +6,7 @@ import { ItemDetail } from "@/types/Item";
 
 const getCurrentVersion = async () => {
     const versionRes = await fetch(`${process.env.NEXT_PUBLIC_DDRAGON_URL}/api/versions.json`);
-    const versionData = await versionRes.json();
+    const versionData: string[] = await versionRes.json();
     const currentVersion = versionData[0];
     return currentVersion;
 };

@@ -30,7 +30,7 @@ export default function RootLayout({
         <html lang="en">
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white`}>
                 <header>
-                    <nav className="bg-[#2c2c2c] text-white font-bold flex flex-row justify-between py-[10px] px-[100px]">
+                    <nav className="bg-[#2c2c2c] text-white font-bold flex flex-row justify-between h-54 py-[10px] px-[100px]">
                         <Link
                             href={"/"}
                             className="hover:bg-slate-500 w-[200px] px-[20px] py-[10px] items-center text-center rounded-[14px]"

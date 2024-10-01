@@ -95,7 +95,7 @@ interface ChampionImage {
     h: number;
 }
 
-interface Skin {
+export interface Skin {
     id: string;
     num: number;
     name: string;
