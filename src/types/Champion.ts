@@ -132,7 +132,7 @@ interface ChampionStats {
     attackspeed: number;
 }
 
-interface Spell {
+export interface Spell {
     id: string;
     name: string;
     description: string;
