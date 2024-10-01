@@ -6,7 +6,7 @@ import { ItemDetail } from "@/types/Item";
 
 const getCurrentVersion = async () => {
     const versionRes = await fetch(`${process.env.NEXT_PUBLIC_DDRAGON_URL}/api/versions.json`);
-    const versionData = await versionRes.json();
+    const versionData: string[] = await versionRes.json();
     const currentVersion = versionData[0];
     return currentVersion;
 };
@@ -43,7 +43,7 @@ const getItemsList = async () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const newItemsData = Object.entries(itemData.data)
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        .filter(([_, value]) => value.maps["11"] && value.gold.purchasable)
+        .filter(([_, value]) => value.maps["11"] && value.gold.purchasable && (value.inStore ? value.inStore : true))
         .reduce((acc: Record<string, ItemDetail["data"][string]>, [key, value]) => {
             acc[key] = value;
             return acc;

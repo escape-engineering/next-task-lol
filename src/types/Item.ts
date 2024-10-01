@@ -26,6 +26,7 @@ export type ItemDetail = {
                 purchasable?: number;
             };
             tags: string[];
+            inStore?: boolean;
             maps: Record<string, boolean>;
             stats: Record<string, number>;
         };
