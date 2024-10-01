@@ -43,7 +43,7 @@ const getItemsList = async () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const newItemsData = Object.entries(itemData.data)
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        .filter(([_, value]) => value.maps["11"] && value.gold.purchasable)
+        .filter(([_, value]) => value.maps["11"] && value.gold.purchasable && (value.inStore ? value.inStore : true))
         .reduce((acc: Record<string, ItemDetail["data"][string]>, [key, value]) => {
             acc[key] = value;
             return acc;

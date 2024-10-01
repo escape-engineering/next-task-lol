@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}>
+            <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white`}>
                 <header>
                     <nav className="bg-[#2c2c2c] text-white font-bold flex flex-row justify-between py-[10px] px-[100px]">
                         <Link
