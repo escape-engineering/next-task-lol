@@ -1,9 +1,9 @@
-import SkinCarousel from "@/_components/Carousel";
-import { CHAMPION_LOADING_IMG_URL, CHAMPION_SPLASH_IMG_URL, SPELL_IMG_URL } from "@/app/constants/ddragonURL";
-import { cleanDescription } from "@/utils/cleanDescription";
+import SkinCarousel from "@/_components/championdetail/Carousel";
+import ChampionInfo from "@/_components/championdetail/ChampionInfo";
+import ChampionSpell from "@/_components/championdetail/ChampionSpell";
+import { CHAMPION_LOADING_IMG_URL, CHAMPION_SPLASH_IMG_URL } from "@/app/constants/ddragonURL";
 import { getChampionDetail } from "@/utils/serverApi";
 import Image from "next/image";
-import React from "react";
 
 type Props = {
     params: {
@@ -44,6 +44,11 @@ const ChampionDetailPage = async ({ params: { championName } }: Props) => {
                     <h3 className="font-bold text-[25px]">{cham.name}</h3>
                     <p className="text-[#ecc134] text-[22px]">{cham.title}</p>
                     <p>{cham.lore}</p>
+                    <ul className="rounded-[20px] flex flex-row justify-center items-end gap-[30px] bg-[rgba(0,0,0,0.4)] w-[350px] p-[20px]">
+                        {Object.entries(cham.info).map(([key, value]) => {
+                            return <ChampionInfo key={`${key}-${value}`} info={[key, value]} />;
+                        })}
+                    </ul>
                 </div>
                 <div>
                     <Image
@@ -59,29 +64,13 @@ const ChampionDetailPage = async ({ params: { championName } }: Props) => {
             <section className="flex flex-col justify-center gap-[15px] relative z-10 rounded-3xl px-[10px] py-[20px] bg-[rgba(0,0,0,0.3)]">
                 <h3 className="text-[25px]">챔피언 스킬</h3>
                 <ul className="flex flex-row gap-[30px] w-[1000px] overflow-auto whitespace-nowrap">
-                    {cham.spells.map((spell) => (
-                        <li
-                            className="flex flex-col justify-start items-center w-[300px]"
-                            key={`${spell.id}-${spell.name}`}
-                        >
-                            <Image
-                                src={`${SPELL_IMG_URL}/${spell.id}.png`}
-                                alt={`${spell.name}`}
-                                width={100}
-                                height={100}
-                            />
-                            <div className="my-[10px] flex flex-col gap-[10px]">
-                                <h4 className="font-bold">{`${spell.name} - ${spell.id.slice(-1)}`}</h4>
-                                <p className="break-words overflow-hidden whitespace-normal w-[100%]">
-                                    {cleanDescription(spell.description)}
-                                </p>
-                            </div>
-                        </li>
+                    {cham.spells.map((spell, idx) => (
+                        <ChampionSpell key={`${spell.id}-${spell.name}`} spell={spell} idx={idx} />
                     ))}
                 </ul>
             </section>
             {/* 스킨 목록 */}
-            <section className="w-[500px] bg-[rgba(0,0,0,0.3)]">
+            <section className="rounded-[20px] w-[500px] bg-[rgba(0,0,0,0.3)]">
                 <SkinCarousel championName={championName} skins={cham.skins} />
             </section>
         </div>
