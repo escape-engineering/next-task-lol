@@ -1,12 +1,13 @@
 import { getChampionList } from "@/utils/serverApi";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import Random from "@/_components/champions/Random";
 
 const ChampionsPage = async () => {
     const championList = await getChampionList();
     return (
         <div className="grid grid-cols-6 gap-[30px] px-[20px] py-[20px]">
+            <Random championList={championList} />
             {championList
                 .sort((a, b) => (a.name < b.name ? -1 : 1))
                 .map((cham) => {
