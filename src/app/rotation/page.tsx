@@ -1,9 +1,9 @@
 "use client";
 
-import RotationCarousel from "@/_components/rotation/RotationCarousel";
 import { Champion } from "@/types/Champion";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Suspense } from "react";
+import RotationCarousel from "../_components/rotation/RotationCarousel";
 
 const RotationPage = () => {
     const { data: rotationObj } = useSuspenseQuery({
@@ -31,14 +31,12 @@ const RotationPage = () => {
             return { freeChamps, freeChampsForNewbs };
         },
     });
-    console.log("rotationObjf :>> ", rotationObj.freeChamps);
-    console.log("rotationObjfr :>> ", rotationObj.freeChampsForNewbs);
     return (
-        <div>
+        <div className="py-[20px]">
             <Suspense fallback={<>loading...</>}>
                 <section className="flex flex-col justify-center items-center">
                     <h1>챔피언 로테이션</h1>
-                    <div className="flex flex-row gap-[10px] w-[1000px]">
+                    <div className="flex flex-row gap-[10px]">
                         <RotationCarousel key={1} rotationChampLists={rotationObj.freeChamps} />
                     </div>
                 </section>

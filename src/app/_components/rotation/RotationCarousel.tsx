@@ -16,7 +16,7 @@ type Props = {
 const RotationCarousel = ({ rotationChampLists }: Props) => {
     return (
         <Carousel
-            className="w-full max-w-xs"
+            className="w-full max-w-[1000px] h-[400px] flex justify-center items-center"
             plugins={[
                 Autoplay({
                     delay: 3000,
@@ -28,7 +28,7 @@ const RotationCarousel = ({ rotationChampLists }: Props) => {
                     <CarouselItem className="basis-1/3" key={`${champ.id}-${index}`}>
                         <div className="p-1">
                             <Card className="bg-transparent border-0">
-                                <CardContent className=" flex flex-col aspect-square items-center justify-center p-6 gap-[10px] w-[100px] h-[130px]">
+                                <CardContent className=" flex flex-col aspect-square items-center justify-center p-6 gap-[10px]">
                                     <Link
                                         className="flex flex-col align-center"
                                         href={`/champions/${champ.id}`}
@@ -37,8 +37,8 @@ const RotationCarousel = ({ rotationChampLists }: Props) => {
                                         <Image
                                             src={`https://ddragon.leagueoflegends.com/cdn/14.19.1/img/champion/${champ.id}.png`}
                                             alt={`${champ.name}이미지`}
-                                            width={100}
-                                            height={100}
+                                            width={300}
+                                            height={300}
                                         />
                                         <p className="text-white flex justify-center">{champ.name}</p>
                                     </Link>

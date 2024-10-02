@@ -29,6 +29,7 @@ const SkinCarousel = ({ championName, skins }: { championName: string; skins: Sk
                                         alt={`${skin.name}`}
                                         width={300}
                                         height={300}
+                                        priority
                                     />
                                     <p className="text-white">{skin.name == "default" ? "기본스킨" : skin.name}</p>
                                 </CardContent>

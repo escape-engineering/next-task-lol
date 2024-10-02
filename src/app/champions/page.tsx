@@ -1,7 +1,7 @@
 import { getChampionList } from "@/utils/serverApi";
 import Image from "next/image";
 import Link from "next/link";
-import Random from "@/_components/champions/Random";
+import Random from "../_components/champions/Random";
 
 const ChampionsPage = async () => {
     const championList = await getChampionList();

@@ -1,6 +1,6 @@
-import SkinCarousel from "@/_components/championdetail/Carousel";
-import ChampionInfo from "@/_components/championdetail/ChampionInfo";
-import ChampionSpell from "@/_components/championdetail/ChampionSpell";
+import SkinCarousel from "@/app/_components/championdetail/Carousel";
+import ChampionInfo from "@/app/_components/championdetail/ChampionInfo";
+import ChampionSpell from "@/app/_components/championdetail/ChampionSpell";
 import { CHAMPION_LOADING_IMG_URL, CHAMPION_SPLASH_IMG_URL } from "@/app/constants/ddragonURL";
 import { getChampionDetail } from "@/utils/serverApi";
 import Image from "next/image";
@@ -70,7 +70,7 @@ const ChampionDetailPage = async ({ params: { championName } }: Props) => {
                 </ul>
             </section>
             {/* 스킨 목록 */}
-            <section className="rounded-[20px] w-[500px] bg-[rgba(0,0,0,0.3)]">
+            <section className="flex flex-row justify-center items-center rounded-[20px] w-[500px] bg-[rgba(0,0,0,0.3)]">
                 <SkinCarousel championName={championName} skins={cham.skins} />
             </section>
         </div>
