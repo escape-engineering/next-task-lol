@@ -1,18 +1,18 @@
 "use client";
 
-// import IdealModal from "@/components/IdealModal";
 import { Champion } from "@/types/Champion";
 import { generateRandomNickname } from "@/utils/generateRandomNickname";
 import { getChampionList } from "@/utils/serverApi";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { CHAMPION_LOADING_IMG_URL } from "../constants/ddragonURL";
 
 const IdealPage = () => {
     const router = useRouter();
     const [champions, setChampions] = useState<Champion[]>([]);
     const [displays, setDisplays] = useState<Champion[]>([]);
     const [winners, setWinners] = useState<Champion[]>([]);
+    const [rounds, setRounds] = useState(32);
 
     useEffect(() => {
         const getList = async () => {
@@ -36,10 +36,11 @@ const IdealPage = () => {
                     body: JSON.stringify({
                         nickname: randomNickname,
                         result: champ.name,
+                        name: champ.id,
                     }),
                 });
                 setTimeout(() => {
-                    router.push(`/idealresult`);
+                    router.push(`/idealresult?result=${champ.id}`);
                 }, 3000);
             } //NOTE 결승전이 아닌 4, 8, 16 ... 각 강의 마지막 선택일때
             else {
@@ -47,6 +48,7 @@ const IdealPage = () => {
                 setChampions(updatedChampions);
                 setDisplays([updatedChampions[0], updatedChampions[1]]);
                 setWinners([]);
+                setRounds(rounds / 2);
             }
             // NOTE 일반적인 중간 선택일때
         } else if (champions.length > 2) {
@@ -54,30 +56,36 @@ const IdealPage = () => {
             setDisplays([champions[2], champions[3]]);
             setChampions(champions.slice(2));
         }
-        console.log("displays :>> ", displays);
-        console.log("winners :>> ", winners);
-        console.log("champions :>> ", champions);
     };
 
     return (
-        <>
-            {/* <IdealModal /> */}
-            <div>
-                {displays?.map((item) => {
+        <div className="flex flex-col justify-center items-center py-[50px] gap-[30px]">
+            <p className="flex flex-row font-bold text-[30px] gap-[5px]">
+                <span>{rounds == 2 ? "결승전" : `${rounds}강`}</span>
+                {rounds == 2 ? <></> : <span>({`${winners.length}/${rounds / 2}`})</span>}
+            </p>
+            <div className="flex flex-row justify-center items-center gap-[80px]">
+                {displays?.map((item, idx) => {
                     return (
-                        <div onClick={() => selectChampion(item)} key={item.id}>
-                            <Image
-                                src={`https://ddragon.leagueoflegends.com/cdn/14.19.1/img/champion/${item.id}.png`}
-                                alt={`${item.name}이미지`}
-                                width={300}
-                                height={300}
-                            />
-                            {item.name}
-                        </div>
+                        <>
+                            <div
+                                className="cursor-pointer rounded-[20px] py-[20px] flex flex-col items-center gap-[20px] text-[30px] font-bold hover:translate-y-[-20px] hover:shadow-xl hover:shadow-[#79797913]"
+                                onClick={() => selectChampion(item)}
+                                key={item.id}
+                            >
+                                <img
+                                    src={`${CHAMPION_LOADING_IMG_URL}/${item.id}_0.jpg`}
+                                    alt={`${idx + 1}번 이미지`}
+                                    className="w-[308px] h-[560px]"
+                                />
+                                {item.name}
+                            </div>
+                            {idx == 0 ? <p>VS</p> : <></>}
+                        </>
                     );
                 })}
             </div>
-        </>
+        </div>
     );
 };
 
