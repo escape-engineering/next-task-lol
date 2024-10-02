@@ -1,5 +1,4 @@
 import { getItemsList } from "@/utils/serverApi";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -18,18 +17,17 @@ const ItemsPage = async () => {
         };
     });
     return (
-        <ul className="flex flex-row gap-[30px] flex-wrap">
+        <ul className="grid grid-cols-8 gap-[30px] px-[20px] py-[20px]">
             {itemValues.map((item, idx) => {
                 return (
                     <li key={`${item.name}+${crypto.randomUUID()}`}>
-                        <Link href={`/items/${itemKeys[idx]}`}>
-                            <Image
+                        <Link href={`/items/${itemKeys[idx]}`} className="flex flex-col justify-center items-center">
+                            <img
                                 src={`https://ddragon.leagueoflegends.com/cdn/14.19.1/img/item/${itemKeys[idx]}.png`}
                                 alt={item.name}
-                                width={100}
-                                height={100}
+                                className="w-[100px] h-[100px]"
                             />
-                            <h3>{item.name}</h3>
+                            <h3 className="flex items-center justify-center">{item.name}</h3>
                         </Link>
                     </li>
                 );

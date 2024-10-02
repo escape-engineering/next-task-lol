@@ -1,7 +1,3 @@
-import poro from "@/public/poro.jpg";
-import poro2 from "@/public/poro2.png";
-import zoe from "@/public/zoe.jpg";
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
@@ -13,15 +9,15 @@ export default function Home() {
             </section>
             <section className="flex flex-col gap-[10px]">
                 <Link href={"/champions"} className="w-[300px] h-[300px]">
-                    <Image src={poro} alt="챔피언목록logo" />
+                    <img src="/poro.jpg" alt="챔피언목록logo" />
                     <p>챔피언 목록 보기</p>
                 </Link>
                 <Link href={"/rotation"} className="w-[300px] h-[300px]">
-                    <Image src={poro2} alt="로테이션logo" />
+                    <img src="/poro2.png" alt="로테이션logo" />
                     <p>금주 로테이션 확인</p>
                 </Link>
                 <Link href={"/items"} className="w-[300px] h-[300px]">
-                    <Image src={zoe} alt="아이템목록logo" />
+                    <img src="/zoe.jpg" alt="아이템목록logo" />
                     <p>아이템 목록 보기</p>
                 </Link>
             </section>

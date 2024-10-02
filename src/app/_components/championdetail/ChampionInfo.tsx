@@ -1,5 +1,4 @@
 import { INFO_MATCHER } from "@/app/constants/defaultConstants";
-import React from "react";
 
 type Props = {
     info: [key: string, value: string];
