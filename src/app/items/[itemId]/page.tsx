@@ -1,6 +1,5 @@
 import { cleanDescription } from "@/utils/cleanDescription";
 import { getItemsList } from "@/utils/serverApi";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -22,7 +21,7 @@ const ItemDetail = async ({ params: { itemId } }: Props) => {
             <div className="flex flex-row justify-center items-center gap-[100px]">
                 <div className="flex flex-col gap-[10px]">
                     <p className="text-[30px]">{targetItem.name}</p>
-                    <p className="text-[23px] text-[#ecc134]">{targetItem.plaintext}</p>
+                    <p className="text-[23px] text-[#ecc134] max-w-[500px]">{targetItem.plaintext}</p>
                 </div>
                 <img
                     src={`https://ddragon.leagueoflegends.com/cdn/14.19.1/img/item/${itemId}.png`}
@@ -68,11 +67,10 @@ const ItemDetail = async ({ params: { itemId } }: Props) => {
                             targetItem.into.map((el) => (
                                 <li key={`el-${el}`}>
                                     <Link href={`/items/${el}`}>
-                                        <Image
+                                        <img
                                             src={`https://ddragon.leagueoflegends.com/cdn/14.19.1/img/item/${el}.png`}
                                             alt=""
-                                            width={100}
-                                            height={100}
+                                            className="w-[100px] h-[100px]"
                                         />
                                     </Link>
                                 </li>

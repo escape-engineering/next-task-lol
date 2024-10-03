@@ -48,14 +48,12 @@ const ChampionDetailPage = async ({ params: { championName } }: Props) => {
                         })}
                     </ul>
                 </div>
-                <div>
-                    <img
-                        src={`${CHAMPION_LOADING_IMG_URL}/${cham.id}_0.jpg`}
-                        alt={`${cham.name} 이미지`}
-                        className="rounded-[20px]"
-                        fetchPriority="high"
-                    />
-                </div>
+                <img
+                    src={`${CHAMPION_LOADING_IMG_URL}/${cham.id}_0.jpg`}
+                    alt={`${cham.name} 이미지`}
+                    className="rounded-[20px]"
+                    fetchPriority="high"
+                />
             </section>
             {/* 챔피언 스킬 */}
             <section className="flex flex-col justify-center gap-[15px] relative z-10 rounded-3xl px-[10px] py-[20px] bg-[rgba(0,0,0,0.3)]">

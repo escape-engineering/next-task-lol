@@ -1,5 +1,6 @@
 "use client";
 
+import { CHAMPION_SPLASH_IMG_URL } from "@/app/constants/ddragonURL";
 import { Card, CardContent } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Skin } from "@/types/Champion";
@@ -22,7 +23,7 @@ const SkinCarousel = ({ championName, skins }: { championName: string; skins: Sk
                             <Card className="bg-transparent border-0">
                                 <CardContent className=" flex flex-col  items-center justify-center p-6 gap-[10px]">
                                     <img
-                                        src={`https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${championName}_${skin.num}.jpg`}
+                                        src={`${CHAMPION_SPLASH_IMG_URL}/${championName}_${skin.num}.jpg`}
                                         alt={`${skin.name}`}
                                         className="w-[1215px] h-[717px]"
                                     />

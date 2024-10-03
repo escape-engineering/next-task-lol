@@ -25,13 +25,15 @@ const IdealPage = () => {
     }, []);
 
     const selectChampion = async (champ: Champion): Promise<void> => {
+        //NOTE 최종 선택 후 클릭시 작동하지 않도록 early return
+        if (champions.length === 2 && winners.length === 0 && displays.length === 1) return;
         //NOTE 해당 라운드의 마지막 선택
         if (champions.length <= 2) {
             //NOTE 결승전이라면
             if (winners.length === 0) {
                 const randomNickname = generateRandomNickname();
                 setDisplays([champ]);
-                await fetch(`${process.env.NEXT_PUBLIC_RESULT_URL}`, {
+                await fetch(`${process.env.NEXT_PUBLIC_ROUTE_API_URL}/api/ideal`, {
                     method: "POST",
                     body: JSON.stringify({
                         nickname: randomNickname,
@@ -40,7 +42,7 @@ const IdealPage = () => {
                     }),
                 });
                 setTimeout(() => {
-                    router.push(`/idealresult?result=${champ.id}`);
+                    router.push(`/idealresult?result=${champ.id}&name=${champ.name}`);
                 }, 3000);
             } //NOTE 결승전이 아닌 4, 8, 16 ... 각 강의 마지막 선택일때
             else {
@@ -67,11 +69,10 @@ const IdealPage = () => {
             <div className="flex flex-row justify-center items-center gap-[80px]">
                 {displays?.map((item, idx) => {
                     return (
-                        <>
+                        <div key={item.id} className="flex flex-row gap-[80px] justify-center items-center">
                             <div
                                 className="cursor-pointer rounded-[20px] py-[20px] flex flex-col items-center gap-[20px] text-[30px] font-bold hover:translate-y-[-20px] hover:shadow-xl hover:shadow-[#79797913]"
                                 onClick={() => selectChampion(item)}
-                                key={item.id}
                             >
                                 <img
                                     src={`${CHAMPION_LOADING_IMG_URL}/${item.id}_0.jpg`}
@@ -81,7 +82,7 @@ const IdealPage = () => {
                                 {item.name}
                             </div>
                             {idx == 0 ? <p>VS</p> : <></>}
-                        </>
+                        </div>
                     );
                 })}
             </div>

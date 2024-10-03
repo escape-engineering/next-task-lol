@@ -11,7 +11,6 @@ const RotationPage = () => {
         queryFn: async () => {
             const rotationRes = await fetch(`${process.env.NEXT_PUBLIC_ROUTE_API_URL}/api/rotation`);
             const { data: rotationData } = await rotationRes.json();
-            console.log("rotationData :>> ", rotationData);
             const championsRes = await fetch(
                 `${process.env.NEXT_PUBLIC_DDRAGON_URL}/cdn/14.19.1/data/ko_KR/champion.json`
             );

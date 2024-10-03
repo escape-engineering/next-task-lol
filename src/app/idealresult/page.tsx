@@ -1,14 +1,15 @@
 "use client";
 
 import { Ideal } from "@/types/Ideal";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { Suspense } from "react";
-import { CHAMPION_SPLASH_IMG_URL } from "../constants/ddragonURL";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { Suspense, useEffect, useState } from "react";
+import { CHAMPION_SPLASH_IMG_URL, CHAMPION_THUMB_IMG_URL } from "../constants/ddragonURL";
 import Image from "next/image";
 
 type Props = {
     searchParams: {
         result?: string;
+        name?: string;
     };
 };
 
@@ -18,49 +19,34 @@ type Sorted = {
     count: number;
 };
 
-const IdealResult = ({ searchParams: { result } }: Props) => {
-    const { data: idealsData } = useSuspenseQuery({
+const IdealResult = ({ searchParams: { result, name } }: Props) => {
+    const { data: idealsData } = useQuery({
         queryKey: ["ideals"],
         queryFn: async () => {
             const res = await fetch(`${process.env.NEXT_PUBLIC_ROUTE_API_URL}/api/idealresult`);
             const data: Ideal = await res.json();
-            return data.data;
+            const sorted = data.data
+                .reduce((acc: any[], item) => {
+                    const existing = acc.find((entry) => entry.name === item.name);
+                    if (existing) {
+                        existing.count++;
+                    } else {
+                        acc.push({ name: item.name, count: 1, id: item.result });
+                    }
+                    return acc;
+                }, [])
+                .sort((a, b) => b.count - a.count);
+            return sorted;
         },
-        staleTime: 1000 * 60 * 5,
-        gcTime: 1000 * 60 * 10,
+        staleTime: 1,
     });
 
-    // const resultCount: { [key: string]: number } = {};
-    // idealsData?.forEach((ideal) => {
-    //     const data = ideal.result;
-    //     resultCount[data] = (resultCount[data] || 0) + 1;
-    // });
-    // // 객체를 배열로 변환
-    // const resultCountArray = Object.entries(resultCount)
-    //     .map(([key, value]) => ({ name: key, count: value }))
-    //     .sort((a, b) => b.count - a.count);
-    const countByResult = idealsData
-        .reduce((acc: Sorted[], item) => {
-            const existing = acc.find((entry) => entry.name === item.name);
+    let totalResultCount = idealsData?.reduce((acc, cur) => acc + cur.count, 0);
+    let mostSelectedChampion = idealsData?.find((el) => el.result == idealsData[0].name);
 
-            if (existing) {
-                existing.count++;
-            } else {
-                acc.push({ name: item.name, count: 1, id: item.result });
-            }
-
-            return acc;
-        }, [])
-        .sort((a, b) => b.count - a.count);
-    console.log("countByResult :>> ", countByResult);
-    const totalResultCount = countByResult?.reduce((acc, cur) => acc + cur.count, 0);
-    const mostSelectedChampion = idealsData?.find((el) => el.result == countByResult[0].name);
-    const selectedChampionName = idealsData.filter((ideal) => ideal.name == result)[0].result;
-    // console.log("idealsData :>> ", idealsData);
-    // console.log("resultCountArray :>> ", resultCountArray);
     return (
-        <div className="flex flex-col justify-center items-center">
-            {result ? (
+        <div className="flex flex-col justify-center items-center py-[20px]">
+            {result && name ? (
                 <>
                     <img
                         src={`${CHAMPION_SPLASH_IMG_URL}/${result}_0.jpg`}
@@ -74,8 +60,9 @@ const IdealResult = ({ searchParams: { result } }: Props) => {
                             width={900}
                             height={531}
                             className="rounded-[10px] border-[3px] border-black"
+                            priority
                         />
-                        <p className="text-[30px] font-bold">{selectedChampionName}</p>
+                        <p className="text-[30px] font-bold">{name}</p>
                     </div>
                 </>
             ) : (
@@ -85,30 +72,28 @@ const IdealResult = ({ searchParams: { result } }: Props) => {
                     className="absolute top-[64px] left-0 w-full h-full object-cover filter blur-xl z-[-2]"
                 />
             )}
-            <Suspense fallback={<>loading...</>}>
-                <p>totalResultCount - {totalResultCount}</p>
-                <div className="flex flex-col justify-center items-start gap-[10px] w-[900px]">
-                    {countByResult.map((re) => {
-                        return (
-                            <div
-                                className="flex flex-row gap-[5px] justify-start items-center p-[10px] rounded-[10px] bg-[rgba(180,180,180,0.3)] w-[900px]"
-                                key={`${re.name}-${re.count}`}
-                            >
-                                <img
-                                    className="w-[50px] h-[50px]"
-                                    src={`https://ddragon.leagueoflegends.com/cdn/14.19.1/img/champion/${re.name}.png`}
-                                />
-                                <div
-                                    className="bg-[#153e5a] h-[40px] flex justify-start items-center"
-                                    style={{ width: `calc(1000px*(${re.count / totalResultCount}))` }}
-                                >
-                                    <p className="text-[#d1a83f] font-bold text-[20px] absolute">{`${re.id}(${re.count})`}</p>
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
-            </Suspense>
+            <div className="flex flex-col justify-center items-start gap-[10px] w-[900px]">
+                {idealsData?.length
+                    ? idealsData?.map((re) => {
+                          return (
+                              <div
+                                  className="flex flex-row gap-[5px] justify-start items-center p-[10px] rounded-[10px] bg-[rgba(180,180,180,0.3)] w-[900px]"
+                                  key={`${re.name}-${re.count}`}
+                              >
+                                  <img className="w-[50px] h-[50px]" src={`${CHAMPION_THUMB_IMG_URL}/${re.name}.png`} />
+                                  <div
+                                      className="bg-[#153e5a] h-[40px] flex justify-start items-center"
+                                      style={{ width: `calc(900px*(${re.count / totalResultCount}))` }}
+                                  >
+                                      <p className="text-[#d1a83f] font-bold text-[20px] absolute">{`${re.id}(${
+                                          re.count
+                                      }) ${((re.count / totalResultCount) * 100).toFixed(2)}%`}</p>
+                                  </div>
+                              </div>
+                          );
+                      })
+                    : null}
+            </div>
         </div>
     );
 };

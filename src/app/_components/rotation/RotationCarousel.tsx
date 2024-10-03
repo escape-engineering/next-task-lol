@@ -1,13 +1,11 @@
 "use client";
 
-import * as React from "react";
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import Image from "next/image";
 import Autoplay from "embla-carousel-autoplay";
 import { Champion } from "@/types/Champion";
 import Link from "next/link";
+import { CHAMPION_THUMB_IMG_URL } from "@/app/constants/ddragonURL";
 
 type Props = {
     rotationChampLists: Champion[];
@@ -34,11 +32,10 @@ const RotationCarousel = ({ rotationChampLists }: Props) => {
                                         href={`/champions/${champ.id}`}
                                         key={champ.key}
                                     >
-                                        <Image
-                                            src={`https://ddragon.leagueoflegends.com/cdn/14.19.1/img/champion/${champ.id}.png`}
+                                        <img
+                                            src={`${CHAMPION_THUMB_IMG_URL}/${champ.id}.png`}
                                             alt={`${champ.name}이미지`}
-                                            width={300}
-                                            height={300}
+                                            className="w-[300px] h-[300px]"
                                         />
                                         <p className="text-white flex justify-center">{champ.name}</p>
                                     </Link>

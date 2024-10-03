@@ -1,6 +1,6 @@
 import { getItemsList } from "@/utils/serverApi";
 import Link from "next/link";
-import React from "react";
+import { ITEM_IMG_URL } from "../constants/ddragonURL";
 
 const ItemsPage = async () => {
     const items = await getItemsList();
@@ -23,7 +23,7 @@ const ItemsPage = async () => {
                     <li key={`${item.name}+${crypto.randomUUID()}`}>
                         <Link href={`/items/${itemKeys[idx]}`} className="flex flex-col justify-center items-center">
                             <img
-                                src={`https://ddragon.leagueoflegends.com/cdn/14.19.1/img/item/${itemKeys[idx]}.png`}
+                                src={`${ITEM_IMG_URL}/${itemKeys[idx]}.png`}
                                 alt={item.name}
                                 className="w-[100px] h-[100px]"
                             />
