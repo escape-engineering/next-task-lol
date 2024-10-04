@@ -1,3 +1,58 @@
 {
-    "results": []
+  "results": [
+    {
+      "id": "5d60",
+      "nickname": "똑똑한 부엉이",
+      "result": "오로라",
+      "name": "Aurora"
+    },
+    {
+      "id": "07b0",
+      "nickname": "멋진 늑대",
+      "result": "미스 포츈",
+      "name": "MissFortune"
+    },
+    {
+      "id": "95d5",
+      "nickname": "슬픈 펭귄",
+      "result": "볼리베어",
+      "name": "Volibear"
+    },
+    {
+      "id": "dfc0",
+      "nickname": "똑똑한 곰",
+      "result": "르블랑",
+      "name": "Leblanc"
+    },
+    {
+      "id": "f88a",
+      "nickname": "똑똑한 기사",
+      "result": "오로라",
+      "name": "Aurora"
+    },
+    {
+      "id": "13ee",
+      "nickname": "은은한 해적",
+      "result": "키아나",
+      "name": "Qiyana"
+    },
+    {
+      "id": "8b37",
+      "nickname": "재빠른 왕",
+      "result": "아트록스",
+      "name": "Aatrox"
+    },
+    {
+      "id": "daf6",
+      "nickname": "친절한 고양이",
+      "result": "세나",
+      "name": "Senna"
+    },
+    {
+      "id": "521f",
+      "nickname": "친절한 호랑이",
+      "result": "오리아나",
+      "name": "Orianna"
+    }
+  ]
 }

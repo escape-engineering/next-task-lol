@@ -1,7 +1,7 @@
+import { convertFilteredObjToTargetItem } from "@/services/itemServices";
 import { cleanDescription } from "@/utils/cleanDescription";
 import { getItemsList } from "@/utils/serverApi";
 import Link from "next/link";
-import React from "react";
 
 type Props = {
     params: {
@@ -11,11 +11,7 @@ type Props = {
 
 const ItemDetail = async ({ params: { itemId } }: Props) => {
     const items = await getItemsList();
-    const targetItem = {
-        ...items[itemId],
-        into: items[itemId].into?.filter((el) => Object.keys(items).some((key) => key == el)),
-        from: items[itemId].from?.filter((el) => Object.keys(items).some((key) => key == el)),
-    };
+    const targetItem = convertFilteredObjToTargetItem(items, itemId);
     return (
         <div className="flex flex-col gap-[50px] py-[30px]">
             <div className="flex flex-row justify-center items-center gap-[100px]">

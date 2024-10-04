@@ -1,10 +1,10 @@
 export interface Ideal {
-    data: [
-        {
-            id: string;
-            nickname: string;
-            result: string;
-            name: string;
-        }
-    ];
+    data: IdealData[];
+}
+
+export interface IdealData {
+    id: string;
+    nickname: string;
+    result: string;
+    name: string;
 }

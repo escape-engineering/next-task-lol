@@ -1,10 +1,8 @@
 "use client";
 
-import { Ideal } from "@/types/Ideal";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import { Suspense, useEffect, useState } from "react";
 import { CHAMPION_SPLASH_IMG_URL, CHAMPION_THUMB_IMG_URL } from "../constants/ddragonURL";
 import Image from "next/image";
+import { useIdealQuery } from "@/query/queries";
 
 type Props = {
     searchParams: {
@@ -13,37 +11,10 @@ type Props = {
     };
 };
 
-type Sorted = {
-    name: string;
-    id: string;
-    count: number;
-};
-
 const IdealResult = ({ searchParams: { result, name } }: Props) => {
-    const { data: idealsData } = useQuery({
-        queryKey: ["ideals"],
-        queryFn: async () => {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_ROUTE_API_URL}/api/idealresult`);
-            const data: Ideal = await res.json();
-            const sorted = data.data
-                .reduce((acc: any[], item) => {
-                    const existing = acc.find((entry) => entry.name === item.name);
-                    if (existing) {
-                        existing.count++;
-                    } else {
-                        acc.push({ name: item.name, count: 1, id: item.result });
-                    }
-                    return acc;
-                }, [])
-                .sort((a, b) => b.count - a.count);
-            return sorted;
-        },
-        staleTime: 1,
-    });
-
-    let totalResultCount = idealsData?.reduce((acc, cur) => acc + cur.count, 0);
-    let mostSelectedChampion = idealsData?.find((el) => el.result == idealsData[0].name);
-
+    const { data: idealsData } = useIdealQuery();
+    const totalResultCount = idealsData?.reduce((acc, cur) => acc + cur.count, 0);
+    const mostSelectedChampion = idealsData ? idealsData[0] : null;
     return (
         <div className="flex flex-col justify-center items-center py-[20px]">
             {result && name ? (
@@ -56,7 +27,7 @@ const IdealResult = ({ searchParams: { result, name } }: Props) => {
                     <div className="py-[20px] flex flex-col justify-center items-center gap-[20px]">
                         <Image
                             src={`${CHAMPION_SPLASH_IMG_URL}/${result}_0.jpg`}
-                            alt={`배경 이미지`}
+                            alt={`우승챔피언 이미지`}
                             width={900}
                             height={531}
                             className="rounded-[10px] border-[3px] border-black"
@@ -68,7 +39,7 @@ const IdealResult = ({ searchParams: { result, name } }: Props) => {
             ) : (
                 <img
                     src={`${CHAMPION_SPLASH_IMG_URL}/${mostSelectedChampion?.name}_0.jpg`}
-                    alt={`배경 이미지`}
+                    alt={`배경 이미지 대체`}
                     className="absolute top-[64px] left-0 w-full h-full object-cover filter blur-xl z-[-2]"
                 />
             )}

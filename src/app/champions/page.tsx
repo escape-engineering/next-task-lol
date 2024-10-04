@@ -1,9 +1,11 @@
 import { getChampionList } from "@/utils/serverApi";
 import Link from "next/link";
 import Random from "../_components/champions/Random";
+import { convertDataObjToArray } from "@/services/championServices";
 
 const ChampionsPage = async () => {
-    const championList = await getChampionList();
+    const championData = await getChampionList();
+    const championList = convertDataObjToArray(championData);
     const sortedList = championList.sort((a, b) => (a.name < b.name ? -1 : 1));
     return (
         <div className="grid grid-cols-5 gap-[30px] px-[20px] py-[20px]">
