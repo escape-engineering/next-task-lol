@@ -2,9 +2,15 @@
 
 import RotationCarousel from "../_components/rotation/RotationCarousel";
 import { useRotationQuery } from "@/query/queries";
+import RotationSkeleton from "../_components/rotation/RotationSkeleton";
+import RotationErrorPage from "../_components/rotation/RotationErrorPage";
 
 const RotationPage = () => {
-    const { data: rotationObj } = useRotationQuery();
+    const { data: rotationObj, isError: rotationError, isPending: rotationPending, refetch } = useRotationQuery();
+
+    if (rotationError) return <RotationErrorPage refetch={refetch} />;
+    if (rotationPending) return <RotationSkeleton />;
+
     return (
         <div className="py-[20px]">
             <section className="flex flex-col justify-center items-center">
