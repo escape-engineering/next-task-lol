@@ -46,9 +46,9 @@ const useIdealPage = () => {
                 } catch (error) {
                     return error;
                 }
-                // setTimeout(() => {
-                //     router.push(`/idealresult?result=${champ.id}&name=${champ.name}`);
-                // }, 3000);
+                setTimeout(() => {
+                    router.push(`/idealresult?result=${champ.id}&name=${champ.name}`);
+                }, 3000);
             } //NOTE 결승전이 아닌 4, 8, 16 ... 각 강의 마지막 선택일때
             else {
                 const updatedChampions = [...winners, champ];
