@@ -7,6 +7,7 @@ import { ItemDetail } from "@/types/Item";
 
 const getCurrentVersion = async () => {
     const versionRes = await fetch(`${process.env.NEXT_PUBLIC_DDRAGON_URL}/api/versions.json`);
+    if (!versionRes.ok) throw new Error("fetch version error");
     const versionData: string[] = await versionRes.json();
     const currentVersion = versionData[0];
     return currentVersion;
@@ -22,6 +23,7 @@ const getChampionList = async () => {
             },
         }
     );
+    if (!championsRes.ok) throw new Error("fetch championList error");
     const championsData: ChampionList = await championsRes.json();
     return championsData;
 };
@@ -31,6 +33,7 @@ const getChampionDetail = async (championName: string) => {
     const championRes = await fetch(
         `${process.env.NEXT_PUBLIC_DDRAGON_URL}/cdn/${currentVersion}/data/ko_KR/champion/${championName}.json`
     );
+    if (!championRes.ok) throw new Error("fetch championDetail error");
     const championData: ChampionDetail = await championRes.json();
     const championValues = Object.values(championData.data)[0];
     return championValues;
@@ -39,6 +42,7 @@ const getChampionDetail = async (championName: string) => {
 const getItemsList = async () => {
     const currentVersion = await getCurrentVersion();
     const itemRes = await fetch(`${process.env.NEXT_PUBLIC_DDRAGON_URL}/cdn/${currentVersion}/data/ko_KR/item.json`);
+    if (!itemRes.ok) throw new Error("fetch ItemList error");
     const itemData: ItemDetail = await itemRes.json();
     return itemData;
 };
