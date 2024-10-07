@@ -1,9 +1,9 @@
-import { getIdealResults } from "@/utils/serverApi";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "./query.keys";
-import { sortIdealResults } from "@/services/idealServices";
+import { IdealObj, sortIdealResults } from "@/services/idealServices";
 import { Champion } from "@/types/Champion";
 import { splitRotationArray } from "@/services/rotationServices";
+import { Ideal } from "@/types/Ideal";
 
 const useRotationQuery = () => {
     const gethRotationData = async () => {
@@ -25,7 +25,6 @@ const useRotationQuery = () => {
         } catch (error) {
             console.log("error fetching roatationData from api/roattion :>> ", error);
             throw error;
-            // new Error("failed to fetch rotation data");
         }
     };
     return useQuery({
@@ -36,9 +35,19 @@ const useRotationQuery = () => {
 
 const useIdealQuery = () => {
     const getSortedResult = async () => {
-        const idealResult = await getIdealResults();
-        const sortedResult = sortIdealResults(idealResult);
-        return sortedResult;
+        try {
+            const idealResult = await fetch(`${process.env.NEXT_PUBLIC_ROUTE_API_URL}/api/idealresult`);
+            console.log("idealResult.ok :>> ", idealResult.ok);
+            if (!idealResult.ok) {
+                throw new Error(`Ideal API error: ${idealResult.status} ${idealResult.statusText}`);
+            }
+            const idealData: Ideal = await idealResult.json();
+            const sortedResult = sortIdealResults(idealData.data);
+            return sortedResult;
+        } catch (error) {
+            console.log("error fetching idealData from api/ideal :>> ", error);
+            return error;
+        }
     };
     return useQuery({
         queryKey: queryKeys.boardController.ideals(),

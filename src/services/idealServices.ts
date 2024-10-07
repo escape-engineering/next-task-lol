@@ -1,8 +1,14 @@
 import { IdealData } from "@/types/Ideal";
 
+export interface IdealObj {
+    name: string;
+    count: number;
+    id: string;
+}
+
 const sortIdealResults = (data: IdealData[]) => {
     return data
-        .reduce((acc: any[], item) => {
+        .reduce((acc: IdealObj[], item) => {
             const existing = acc.find((entry) => entry.name === item.name);
             if (existing) {
                 existing.count++;

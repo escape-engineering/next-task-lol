@@ -13,6 +13,7 @@ const useIdealPage = () => {
     const [displays, setDisplays] = useState<Champion[]>([]);
     const [winners, setWinners] = useState<Champion[]>([]);
     const [rounds, setRounds] = useState(32);
+    const [isPending, setIsPending] = useState(false);
 
     const getList = async () => {
         const res = await getChampionList();
@@ -24,7 +25,7 @@ const useIdealPage = () => {
 
     const isEndofSelect = champions.length === 2 && winners.length === 0 && displays.length === 1;
 
-    const selectChampion = async (champ: Champion): Promise<void> => {
+    const selectChampion = async (champ: Champion): Promise<void | unknown> => {
         //NOTE 최종 선택 후 클릭시 작동하지 않도록 early return
         if (isEndofSelect) return;
         //NOTE 해당 라운드의 마지막 선택
@@ -33,17 +34,21 @@ const useIdealPage = () => {
             if (winners.length === 0) {
                 const randomNickname = generateRandomNickname();
                 setDisplays([champ]);
-                await fetch(`${process.env.NEXT_PUBLIC_ROUTE_API_URL}/api/ideal`, {
-                    method: "POST",
-                    body: JSON.stringify({
-                        nickname: randomNickname,
-                        result: champ.name,
-                        name: champ.id,
-                    }),
-                });
-                setTimeout(() => {
-                    router.push(`/idealresult?result=${champ.id}&name=${champ.name}`);
-                }, 3000);
+                try {
+                    await fetch(`${process.env.NEXT_PUBLIC_ROUTE_API_URL}/api/ideal`, {
+                        method: "POST",
+                        body: JSON.stringify({
+                            nickname: randomNickname,
+                            result: champ.name,
+                            name: champ.id,
+                        }),
+                    });
+                } catch (error) {
+                    return error;
+                }
+                // setTimeout(() => {
+                //     router.push(`/idealresult?result=${champ.id}&name=${champ.name}`);
+                // }, 3000);
             } //NOTE 결승전이 아닌 4, 8, 16 ... 각 강의 마지막 선택일때
             else {
                 const updatedChampions = [...winners, champ];
@@ -59,7 +64,7 @@ const useIdealPage = () => {
             setChampions(champions.slice(2));
         }
     };
-    return { rounds, winners, displays, selectChampion, getList, isEndofSelect };
+    return { rounds, winners, displays, selectChampion, getList, isEndofSelect, isPending };
 };
 
 export default useIdealPage;

@@ -12,9 +12,11 @@ type Props = {
 };
 
 const IdealResult = ({ searchParams: { result, name } }: Props) => {
-    const { data: idealsData } = useIdealQuery();
-    const totalResultCount = idealsData?.reduce((acc, cur) => acc + cur.count, 0);
-    const mostSelectedChampion = idealsData ? idealsData[0] : null;
+    const { data: idealsData, isError: isIdealsError, isPending: isIdealsPending } = useIdealQuery();
+    if (isIdealsError) return <div>error</div>;
+    if (isIdealsPending) return <div>loading...</div>;
+    const totalResultCount = Array.isArray(idealsData) ? idealsData?.reduce((acc, cur) => acc + cur.count, 0) : 0;
+    const mostSelectedChampion = Array.isArray(idealsData) ? idealsData[0] : null;
     return (
         <div className="flex flex-col justify-center items-center py-[20px]">
             {result && name ? (
@@ -44,8 +46,8 @@ const IdealResult = ({ searchParams: { result, name } }: Props) => {
                 />
             )}
             <div className="flex flex-col justify-center items-start gap-[10px] w-[900px]">
-                {idealsData?.length
-                    ? idealsData?.map((re) => {
+                {Array.isArray(idealsData) && idealsData?.length
+                    ? idealsData.map((re) => {
                           return (
                               <div
                                   className="flex flex-row gap-[5px] justify-start items-center p-[10px] rounded-[10px] bg-[rgba(180,180,180,0.3)] w-[900px]"
@@ -58,7 +60,7 @@ const IdealResult = ({ searchParams: { result, name } }: Props) => {
                                   >
                                       <p className="text-[#d1a83f] font-bold text-[20px] absolute">{`${re.id}(${
                                           re.count
-                                      }) ${((re.count / totalResultCount) * 100).toFixed(2)}%`}</p>
+                                      }) ${((re.count / totalResultCount) * 100).toFixed(2)} %`}</p>
                                   </div>
                               </div>
                           );

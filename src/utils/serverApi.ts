@@ -52,10 +52,10 @@ const gethRotationData = async () => {
     return { freeChamps, freeChampsForNewbs };
 };
 
-const getIdealResults = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_ROUTE_API_URL}/api/idealresult`);
-    const data: Ideal = await res.json();
-    return data.data;
-};
+// const getIdealResults = async () => {
+//     const res = await fetch(`${process.env.NEXT_PUBLIC_ROUTE_API_URL}/api/idealresult`);
+//     const data: Ideal = await res.json();
+//     return data.data;
+// };
 
-export { getChampionList, getCurrentVersion, getChampionDetail, getItemsList, gethRotationData, getIdealResults };
+export { getChampionList, getCurrentVersion, getChampionDetail, getItemsList, gethRotationData };
