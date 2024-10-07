@@ -2,13 +2,14 @@
 
 import { useEffect } from "react";
 import { CHAMPION_LOADING_IMG_URL } from "../constants/ddragonURL";
-import useIdealPage from "./uesIdealPage";
+import useIdealPage from "./useIdealPage";
 
 const IdealPage = () => {
-    const { rounds, winners, displays, selectChampion, getList, isEndofSelect } = useIdealPage();
+    const { rounds, winners, displays, selectChampion, getList, isEndofSelect, isError } = useIdealPage();
     useEffect(() => {
         getList();
     }, []);
+    if (isError) throw new Error("123");
 
     return (
         <>

@@ -14,6 +14,7 @@ const useIdealPage = () => {
     const [winners, setWinners] = useState<Champion[]>([]);
     const [rounds, setRounds] = useState(32);
     const [isPending, setIsPending] = useState(false);
+    const [isError, setIsError] = useState(false);
 
     const getList = async () => {
         const res = await getChampionList();
@@ -35,7 +36,7 @@ const useIdealPage = () => {
                 const randomNickname = generateRandomNickname();
                 setDisplays([champ]);
                 try {
-                    const res = await fetch(`${process.env.NEXT_PUBLIC_ROUTE_API_URL}/api/ideal1`, {
+                    const res = await fetch(`${process.env.NEXT_PUBLIC_ROUTE_API_URL}/api/ideal`, {
                         method: "POST",
                         body: JSON.stringify({
                             nickname: randomNickname,
@@ -51,6 +52,8 @@ const useIdealPage = () => {
                     }, 3000);
                 } catch (error) {
                     console.log("error :>> ", error);
+                    setIsError(true);
+                    throw new Error("123");
                     return error;
                 }
             } //NOTE 결승전이 아닌 4, 8, 16 ... 각 강의 마지막 선택일때
@@ -68,7 +71,7 @@ const useIdealPage = () => {
             setChampions(champions.slice(2));
         }
     };
-    return { rounds, winners, displays, selectChampion, getList, isEndofSelect, isPending };
+    return { rounds, winners, displays, selectChampion, getList, isEndofSelect, isPending, isError };
 };
 
 export default useIdealPage;
