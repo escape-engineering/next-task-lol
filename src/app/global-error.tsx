@@ -6,7 +6,6 @@ const GlobalError = ({ error }: { error: Error & { digest?: string } }) => {
     return (
         <html>
             <body>
-                {/* <p>{JSON.stringify(error)}</p> */}
                 <div>global-error</div>
             </body>
         </html>
