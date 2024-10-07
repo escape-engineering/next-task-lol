@@ -50,7 +50,7 @@
 ![기술의사결정](https://github.com/user-attachments/assets/32a4a41c-1425-41e1-8990-2717533dc726)
 
 ## LIP의 서비스 요청 흐름도
-![FE Architecture](https://github.com/user-attachments/assets/24147090-c4af-4357-a7ca-01d85cf1446f)
+![FE Architecture](https://github.com/user-attachments/assets/ccf9b24f-6bf2-4259-8080-634ac1bedd30)
 
 ### 전상국
 
