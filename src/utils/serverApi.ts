@@ -1,7 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import { ChampionDetail, ChampionList } from "@/types/Champion";
+import { splitRotationArray } from "@/services/rotationServices";
+import { Champion, ChampionDetail, ChampionList } from "@/types/Champion";
+import { Ideal } from "@/types/Ideal";
 import { ItemDetail } from "@/types/Item";
 
 const getCurrentVersion = async () => {
@@ -22,8 +23,7 @@ const getChampionList = async () => {
         }
     );
     const championsData: ChampionList = await championsRes.json();
-    const championsList = Object.values(championsData.data);
-    return championsList;
+    return championsData;
 };
 
 const getChampionDetail = async (championName: string) => {
@@ -40,15 +40,22 @@ const getItemsList = async () => {
     const currentVersion = await getCurrentVersion();
     const itemRes = await fetch(`${process.env.NEXT_PUBLIC_DDRAGON_URL}/cdn/${currentVersion}/data/ko_KR/item.json`);
     const itemData: ItemDetail = await itemRes.json();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const newItemsData = Object.entries(itemData.data)
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        .filter(([_, value]) => value.maps["11"] && value.gold.purchasable && (value.inStore ? value.inStore : true))
-        .reduce((acc: Record<string, ItemDetail["data"][string]>, [key, value]) => {
-            acc[key] = value;
-            return acc;
-        }, {} as Record<string, ItemDetail["data"][string]>);
-    return newItemsData;
+    return itemData;
 };
 
-export { getChampionList, getCurrentVersion, getChampionDetail, getItemsList };
+const gethRotationData = async () => {
+    const rotationRes = await fetch(`${process.env.NEXT_PUBLIC_ROUTE_API_URL}/api/rotation`);
+    const { data: rotationData } = await rotationRes.json();
+    const championsRes = await fetch(`${process.env.NEXT_PUBLIC_DDRAGON_URL}/cdn/14.19.1/data/ko_KR/champion.json`);
+    const { data: championsData }: { data: Champion[] } = await championsRes.json();
+    const { freeChamps, freeChampsForNewbs } = splitRotationArray(rotationData, championsData);
+    return { freeChamps, freeChampsForNewbs };
+};
+
+// const getIdealResults = async () => {
+//     const res = await fetch(`${process.env.NEXT_PUBLIC_ROUTE_API_URL}/api/idealresult`);
+//     const data: Ideal = await res.json();
+//     return data.data;
+// };
+
+export { getChampionList, getCurrentVersion, getChampionDetail, getItemsList, gethRotationData };

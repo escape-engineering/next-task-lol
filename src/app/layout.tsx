@@ -5,17 +5,6 @@ import Link from "next/link";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Providers from "@/store/queryProvider";
 
-const geistSans = localFont({
-    src: "./fonts/GeistVF.woff",
-    variable: "--font-geist-sans",
-    weight: "100 900",
-});
-const geistMono = localFont({
-    src: "./fonts/GeistMonoVF.woff",
-    variable: "--font-geist-mono",
-    weight: "100 900",
-});
-
 export const metadata: Metadata = {
     title: "Riot Likes",
     description: "Riot Gamse API를 사용하여 리그오브레전드 정보를 제공해주는 페이지입니다.",
@@ -28,7 +17,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white`}>
+            <body className={`antialiased bg-black text-white`}>
                 <header>
                     <nav className="bg-[#2c2c2c] text-white font-bold flex flex-row justify-between h-54 py-[10px] px-[100px]">
                         <Link

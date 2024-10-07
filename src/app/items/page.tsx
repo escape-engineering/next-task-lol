@@ -1,35 +1,23 @@
 import { getItemsList } from "@/utils/serverApi";
-import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { ITEM_IMG_URL } from "../constants/ddragonURL";
+import { convertFilteredObjToArray } from "@/services/itemServices";
 
 const ItemsPage = async () => {
     const items = await getItemsList();
-    const itemKeys = Object.keys(items);
-    const itemValues = Object.values(items).map((item) => {
-        return {
-            name: item.name,
-            description: item.description,
-            plaintext: item.plaintext,
-            into: item.into,
-            image: item.image,
-            gold: item.gold,
-            tags: item.tags,
-        };
-    });
+    const filteredItemsArray = convertFilteredObjToArray(items);
     return (
-        <ul className="flex flex-row gap-[30px] flex-wrap">
-            {itemValues.map((item, idx) => {
+        <ul className="grid grid-cols-8 gap-[30px] px-[20px] py-[20px]">
+            {filteredItemsArray.map((item, idx) => {
                 return (
                     <li key={`${item.name}+${crypto.randomUUID()}`}>
-                        <Link href={`/items/${itemKeys[idx]}`}>
-                            <Image
-                                src={`https://ddragon.leagueoflegends.com/cdn/14.19.1/img/item/${itemKeys[idx]}.png`}
+                        <Link href={`/items/${item.id}`} className="flex flex-col justify-center items-center">
+                            <img
+                                src={`${ITEM_IMG_URL}/${item.id}.png`}
                                 alt={item.name}
-                                width={100}
-                                height={100}
+                                className="w-[100px] h-[100px]"
                             />
-                            <h3>{item.name}</h3>
+                            <h3 className="flex items-center justify-center">{item.name}</h3>
                         </Link>
                     </li>
                 );

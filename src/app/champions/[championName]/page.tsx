@@ -1,9 +1,8 @@
-import SkinCarousel from "@/_components/championdetail/Carousel";
-import ChampionInfo from "@/_components/championdetail/ChampionInfo";
-import ChampionSpell from "@/_components/championdetail/ChampionSpell";
+import SkinCarousel from "@/app/_components/championdetail/Carousel";
+import ChampionInfo from "@/app/_components/championdetail/ChampionInfo";
+import ChampionSpell from "@/app/_components/championdetail/ChampionSpell";
 import { CHAMPION_LOADING_IMG_URL, CHAMPION_SPLASH_IMG_URL } from "@/app/constants/ddragonURL";
 import { getChampionDetail } from "@/utils/serverApi";
-import Image from "next/image";
 
 type Props = {
     params: {
@@ -23,12 +22,11 @@ const ChampionDetailPage = async ({ params: { championName } }: Props) => {
     return (
         <div className="relative min-h-screen flex flex-col justify-center items-center py-[50px] gap-[30px]">
             {/* 배경 이미지 */}
-            <Image
+            <img
                 src={`${CHAMPION_SPLASH_IMG_URL}/${cham.id}_0.jpg`}
                 alt={`${cham.name} 배경 이미지`}
-                width={1920}
-                height={1080}
-                className="absolute top-0 left-0 w-full h-full object-cover filter blur-xl z-[-2]"
+                className="absolute top-0 left-0 w-[1920px] h-[1080px] object-cover filter blur-xl z-[-2]"
+                fetchPriority="high"
             />
             {/* 그라디언트 레이어 */}
             <div
@@ -50,15 +48,12 @@ const ChampionDetailPage = async ({ params: { championName } }: Props) => {
                         })}
                     </ul>
                 </div>
-                <div>
-                    <Image
-                        src={`${CHAMPION_LOADING_IMG_URL}/${cham.id}_0.jpg`}
-                        alt={`${cham.name} 이미지`}
-                        width={300}
-                        height={300}
-                        className="rounded-[20px]"
-                    />
-                </div>
+                <img
+                    src={`${CHAMPION_LOADING_IMG_URL}/${cham.id}_0.jpg`}
+                    alt={`${cham.name} 이미지`}
+                    className="rounded-[20px]"
+                    fetchPriority="high"
+                />
             </section>
             {/* 챔피언 스킬 */}
             <section className="flex flex-col justify-center gap-[15px] relative z-10 rounded-3xl px-[10px] py-[20px] bg-[rgba(0,0,0,0.3)]">
@@ -70,7 +65,7 @@ const ChampionDetailPage = async ({ params: { championName } }: Props) => {
                 </ul>
             </section>
             {/* 스킨 목록 */}
-            <section className="rounded-[20px] w-[500px] bg-[rgba(0,0,0,0.3)]">
+            <section className="flex flex-row justify-center items-center rounded-[20px] bg-[rgba(0,0,0,0.3)]">
                 <SkinCarousel championName={championName} skins={cham.skins} />
             </section>
         </div>

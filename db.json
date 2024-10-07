@@ -1,24 +1,64 @@
 {
   "results": [
     {
-      "id": "5dd3",
-      "nickname": "상냥한 마법사",
-      "result": "조이"
+      "id": "5d60",
+      "nickname": "똑똑한 부엉이",
+      "result": "오로라",
+      "name": "Aurora"
     },
     {
-      "id": "b1e6",
-      "nickname": "행복한 사자",
-      "result": "아칼리"
+      "id": "07b0",
+      "nickname": "멋진 늑대",
+      "result": "미스 포츈",
+      "name": "MissFortune"
     },
     {
-      "id": "fb08",
-      "nickname": "행복한 용",
-      "result": "쉬바나"
+      "id": "95d5",
+      "nickname": "슬픈 펭귄",
+      "result": "볼리베어",
+      "name": "Volibear"
     },
     {
-      "id": "730c",
-      "nickname": "슬픈 기사",
-      "result": "밀리오"
+      "id": "dfc0",
+      "nickname": "똑똑한 곰",
+      "result": "르블랑",
+      "name": "Leblanc"
+    },
+    {
+      "id": "f88a",
+      "nickname": "똑똑한 기사",
+      "result": "오로라",
+      "name": "Aurora"
+    },
+    {
+      "id": "13ee",
+      "nickname": "은은한 해적",
+      "result": "키아나",
+      "name": "Qiyana"
+    },
+    {
+      "id": "8b37",
+      "nickname": "재빠른 왕",
+      "result": "아트록스",
+      "name": "Aatrox"
+    },
+    {
+      "id": "daf6",
+      "nickname": "친절한 고양이",
+      "result": "세나",
+      "name": "Senna"
+    },
+    {
+      "id": "521f",
+      "nickname": "친절한 호랑이",
+      "result": "오리아나",
+      "name": "Orianna"
+    },
+    {
+      "id": "0448",
+      "nickname": "멋진 도깨비",
+      "result": "아우렐리온 솔",
+      "name": "AurelionSol"
     }
   ]
 }
