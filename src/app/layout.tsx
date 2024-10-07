@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 import Link from "next/link";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Providers from "@/store/queryProvider";
 
 export const metadata: Metadata = {
-    title: "Riot Likes",
+    title: "LIP - lol 정보 페이지",
     description: "Riot Gamse API를 사용하여 리그오브레전드 정보를 제공해주는 페이지입니다.",
 };
 
@@ -17,6 +16,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
+            <head>
+                <link rel="icon" href="/icon?<generated>" type="image/<generated>" sizes="<generated>" />
+            </head>
             <body className={`antialiased bg-black text-white`}>
                 <header>
                     <nav className="bg-[#2c2c2c] text-white font-bold flex flex-row justify-between h-54 py-[10px] px-[100px]">

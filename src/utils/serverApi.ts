@@ -43,19 +43,4 @@ const getItemsList = async () => {
     return itemData;
 };
 
-const gethRotationData = async () => {
-    const rotationRes = await fetch(`${process.env.NEXT_PUBLIC_ROUTE_API_URL}/api/rotation`);
-    const { data: rotationData } = await rotationRes.json();
-    const championsRes = await fetch(`${process.env.NEXT_PUBLIC_DDRAGON_URL}/cdn/14.19.1/data/ko_KR/champion.json`);
-    const { data: championsData }: { data: Champion[] } = await championsRes.json();
-    const { freeChamps, freeChampsForNewbs } = splitRotationArray(rotationData, championsData);
-    return { freeChamps, freeChampsForNewbs };
-};
-
-// const getIdealResults = async () => {
-//     const res = await fetch(`${process.env.NEXT_PUBLIC_ROUTE_API_URL}/api/idealresult`);
-//     const data: Ideal = await res.json();
-//     return data.data;
-// };
-
-export { getChampionList, getCurrentVersion, getChampionDetail, getItemsList, gethRotationData };
+export { getChampionList, getCurrentVersion, getChampionDetail, getItemsList };
